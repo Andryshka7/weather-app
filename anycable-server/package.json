@@ -1,0 +1,15 @@
+{
+	"name": "anycable-server",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "npx anycable-go",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@anycable/anycable-go": "^1.5.2"
+	}
+}
