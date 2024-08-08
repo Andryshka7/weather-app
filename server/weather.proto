@@ -1,0 +1,11 @@
+package weather;
+syntax = "proto3";
+
+message WeatherMessage {
+    float temp_c = 1;
+    float feelslike_c = 2;
+    string icon = 3;
+    string conditions = 4;
+    string region = 5;
+    string country = 6;
+}
