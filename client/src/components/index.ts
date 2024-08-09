@@ -1,2 +1,2 @@
-export { default as Loader } from './Loader'
+export { default as AppLoader } from './App Loader'
 export { default as Weather } from './Weather'

@@ -8,10 +8,7 @@ export class WeatherService {
     async getCurrentWearher(lat: string, long: string) {
         const response = await fetch(`${WEATER_API_URL}?key=${WEATER_API_KEY}&q=${lat},${long}`)
         const data = (await response.json()) as Weather
-
-        const buffer = encodeWeather(data)
-        console.log(buffer)
-
-        return parseWeatherObject(data)
+        const weather = parseWeatherObject(data)
+        return await encodeWeather(weather)
     }
 }

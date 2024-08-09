@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useWeater } from 'hooks'
 import socket from 'websocket'
-import { Weather, Loader } from 'components'
-import { Weather as WeatherType } from 'types'
+import { Weather, AppLoader } from 'components'
+import { decodeWeather } from 'helpers'
 
 const App = () => {
     const { state, udpateWeather } = useWeater()
@@ -12,10 +12,13 @@ const App = () => {
             const { latitude: lat, longitude: long } = position.coords
             socket.emit('getWeatherUpdate', { lat, long })
         })
-        socket.on('weatherUpdate', (data: WeatherType) => udpateWeather(data))
-    }, [state])
+        socket.on('weatherUpdate', async (buffer: Buffer) => {
+            const weather = await decodeWeather(buffer)
+            udpateWeather(weather)
+        })
+    }, [])
 
-    return state ? <Weather {...state} /> : <Loader />
+    return state ? <Weather {...state} /> : <AppLoader />
 }
 
 export default App

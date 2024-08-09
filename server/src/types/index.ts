@@ -1,6 +1,6 @@
 interface Weather {
-    temp_c: number
-    feelslike_c: number
+    temp: number
+    feelslike: number
     icon: string
     conditions: string
     region: string

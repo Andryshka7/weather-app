@@ -4,24 +4,21 @@ import * as protobuf from 'protobufjs'
 const parseWeatherObject = (data: any) => {
     const { region, country } = data.location
     const {
-        temp_c,
-        feelslike_c,
+        temp_c: temp,
+        feelslike_c: feelslike,
         condition: { icon, text: conditions }
     } = data.current
 
-    return { temp_c, feelslike_c, icon, conditions, region, country } as Weather
+    return { temp, feelslike, icon, conditions, region, country } as Weather
 }
 
-const encodeWeather = (payload: Weather) => {
-    protobuf.load('weather.proto', function (err, root) {
-        if (err) throw err
+const encodeWeather = async (payload: Weather): Promise<Uint8Array> => {
+    const root = await protobuf.load('src/protos/weather.proto')
+    const weatherMessage = root.lookupType('weather.WeatherMessage')
 
-        const weather = root.lookupType('weather.WeatherMessage')
-        const message = weather.create(payload)
-        const buffer = weather.encode(message).finish()
+    const message = weatherMessage.create(payload)
+    const buffer = weatherMessage.encode(message).finish()
 
-        return buffer
-    })
+    return buffer
 }
-
 export { encodeWeather, parseWeatherObject }
